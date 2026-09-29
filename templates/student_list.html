@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}<h2>Students</h2>
+<form method="get"><input name="q" value="{{ q }}" placeholder="Search name or ID"> <button class="btn g">Search</button>
+{% if user.role == 'admin' %} <a class="btn" href="{% url 'student_add' %}">Register student</a>{% endif %}</form>
+<div class="card tw"><table><tr><th>ID</th><th>Name</th><th>Department</th><th>Level</th><th>Phone</th><th></th></tr>
+{% for s in students %}<tr><td>{{ s.student_id }}</td><td>{{ s.full_name }}</td><td>{{ s.department.code }}</td><td>{{ s.level }}</td><td>{{ s.phone }}</td>
+<td>{% if user.role == 'admin' %}<a href="{% url 'student_history' s.pk %}">Results</a> · <a href="{% url 'student_edit' s.pk %}">Edit</a> · <a href="{% url 'student_delete' s.pk %}">Delete</a>{% endif %}</td></tr>
+{% empty %}<tr><td colspan="6" class="mu">No students found.</td></tr>{% endfor %}</table></div>{% endblock %}
